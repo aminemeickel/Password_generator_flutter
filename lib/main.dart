@@ -3,7 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_pw_gen/Utils/UtilClass.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
+import 'generateButton.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,25 +14,25 @@ void main() {
 
 class WidgetMaker {
   static Widget getoLcalListTile(
-          {String inputText, bool value, Function fun}) =>
+          {required String inputText, bool? value, Function? fun}) =>
       CheckboxListTile(
           title: Text(
             inputText,
             style: TextStyle(color: Colors.black),
           ),
           value: value,
-          onChanged: fun);
+          onChanged: fun as void Function(bool?)?);
 
   static Widget getCheckboxListTile({
-    TextEditingController textContorler,
-    Color forAll,
+    TextEditingController? textContorler,
+    required Color forAll,
   }) =>
       TextField(
           onTap: () => {
-                if (textContorler.text.isNotEmpty)
+                if (textContorler!.text.isNotEmpty)
                   {
                     Clipboard.setData(ClipboardData(text: textContorler.text)),
-                    _MyHomePageState.showToast(message: "Copied!!")
+                    UtilClass.showToast(message: "Copied!!")
                   }
               },
           controller: textContorler,
@@ -52,17 +55,17 @@ class WidgetMaker {
               margin: EdgeInsets.fromLTRB(9, 3, 12, 3),
               padding: EdgeInsets.fromLTRB(9, 0, 1, 0),
               alignment: Alignment.center,
-              width: 72,
+              width: 60,
               child: Row(
                 children: [
                   Icon(
                     Icons.copy,
                     color: Colors.white,
-                    size: 16,
+                    size: 13,
                   ),
                   Text(
                     " Copy",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+                    style: TextStyle(color: Colors.white, fontSize: 13),
                   )
                 ],
               ),
@@ -86,8 +89,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  final String title;
-  MyHomePage({Key key, this.title}) : super(key: key);
+  final String? title;
+  MyHomePage({Key? key, this.title}) : super(key: key);
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -99,10 +102,11 @@ class _MyHomePageState extends State<MyHomePage> {
   var forAll = Colors.blue;
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text(widget.title!),
           centerTitle: true,
         ),
         body: Container(
@@ -152,110 +156,19 @@ class _MyHomePageState extends State<MyHomePage> {
                     value: _checked[3],
                     fun: (val) => setState(() => _checked[3] = val),
                   ),
-                  Padding(padding: EdgeInsets.all(5)),
-                  RaisedButton(
-                    padding: EdgeInsets.fromLTRB(10, 15, 15, 15),
-                    child: Text(
-                      "Generate Password",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                    onPressed: () =>
-                        {_textContorler.text = passwordGenerator()},
+                  GeneratePasswordButton(
+                    textContorler: _textContorler,
                     color: forAll,
+                    text: 'Generate Password',
+                    size: size,
                   ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 15, 0, 5),
+                  SizedBox(
+                    height: 20,
                   ),
-                  RaisedButton(
-                    child: Text(
-                      "Clear Password",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                    color: Colors.red,
-                    onPressed: () => {
-                      if (_textContorler.text != "")
-                        {
-                          _textContorler.text = "",
-                          showToast(message: "Text Cleard")
-                        }
-                    },
-                    padding: EdgeInsets.fromLTRB(30, 15, 30, 15),
-                  )
                 ],
               ),
             ),
           ),
         ));
-  }
-
-  Iterable<String> generateAList(int start, int end) sync* {
-    for (int i = start; i <= end; i++) yield String.fromCharCode(i);
-  }
-
-  String passwordGenerator() {
-    if (!_checked.contains(true)) {
-      showToast(message: "Please Select an Option");
-      return "";
-    }
-    var alphabetList = generateAList("a".codeUnitAt(0), "z".codeUnitAt(0));
-    var alphabetListsecond =
-        generateAList("A".codeUnitAt(0), "Z".codeUnitAt(0));
-    var numbers = generateAList("0".codeUnitAt(0), "9".codeUnitAt(0));
-    var symbols = [
-      "[",
-      "=",
-      "]",
-      ";",
-      "_",
-      "-",
-      ")",
-      ":",
-      "?",
-      "|",
-      "\\",
-      "@",
-      ">",
-      "}",
-      "'",
-      "&",
-      "#",
-      ".",
-      "+",
-      "/",
-      "<",
-      "^",
-      "`",
-      "*",
-      "%",
-      "{",
-      "!",
-      "\$",
-      "(",
-      "~"
-    ];
-    var finalList = <String>[];
-
-    if (_checked[0]) finalList.addAll(alphabetList);
-    if (_checked[1]) finalList.addAll(alphabetListsecond);
-    if (_checked[2]) finalList.addAll(numbers);
-    if (_checked[3]) finalList.addAll(symbols);
-    finalList.shuffle();
-    var word = "";
-    for (int i = 0; i <= _val.round(); i++) {
-      word += finalList[Random().nextInt(finalList.length)];
-    }
-    return word;
-  }
-
-  static void showToast({String message}) {
-    Fluttertoast.cancel();
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM_LEFT,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.black,
-        textColor: Colors.white,
-        fontSize: 16.0);
   }
 }
