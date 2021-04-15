@@ -41,7 +41,7 @@ class GeneratePasswordButton extends StatelessWidget {
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
         onPressed: () {
-          textContorler.text = '';
+          textContorler.text = 'jajjajaja';
         },
       ),
     );

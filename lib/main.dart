@@ -1,12 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_pw_gen/Utils/UtilClass.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_pw_gen/componet/textField.dart';
 
-import 'generateButton.dart';
+import 'componet/generateButton.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,55 +19,6 @@ class WidgetMaker {
           ),
           value: value,
           onChanged: fun as void Function(bool?)?);
-
-  static Widget getCheckboxListTile({
-    TextEditingController? textContorler,
-    required Color forAll,
-  }) =>
-      TextField(
-          onTap: () => {
-                if (textContorler!.text.isNotEmpty)
-                  {
-                    Clipboard.setData(ClipboardData(text: textContorler.text)),
-                    UtilClass.showToast(message: "Copied!!")
-                  }
-              },
-          controller: textContorler,
-          maxLines: 1,
-          readOnly: true,
-          autocorrect: false,
-          decoration: InputDecoration(
-            fillColor: Colors.green,
-            hintText: "Your password goase her",
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(60))),
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: forAll),
-                borderRadius: BorderRadius.all(Radius.circular(60))),
-            suffixIcon: Container(
-              decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.all(Radius.circular(50))),
-              margin: EdgeInsets.fromLTRB(9, 3, 12, 3),
-              padding: EdgeInsets.fromLTRB(9, 0, 1, 0),
-              alignment: Alignment.center,
-              width: 60,
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.copy,
-                    color: Colors.white,
-                    size: 13,
-                  ),
-                  Text(
-                    " Copy",
-                    style: TextStyle(color: Colors.white, fontSize: 13),
-                  )
-                ],
-              ),
-            ),
-          ));
 }
 
 class MyApp extends StatelessWidget {
@@ -125,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                   ),
-                  WidgetMaker.getCheckboxListTile(
+                  textfield(
                     textContorler: _textContorler,
                     forAll: forAll,
                   ),
