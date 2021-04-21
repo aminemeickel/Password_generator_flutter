@@ -18,24 +18,33 @@ class UtilClass {
         fontSize: 16.0);
   }
 
-  static String passwordGenerator(List<bool> checked, int numberofItem) {
-    if (!checked.contains(true)) {
+  static String passwordGenerator(List<bool> checkedOption, int numberofItem) {
+    if (!checkedOption.contains(true)) {
       UtilClass.showToast(message: "Please Select an Option");
       return "";
     }
     var finalList = <String>[];
 
-    if (checked[0]) finalList.addAll(alphabetListLowerCase);
-    if (checked[1]) finalList.addAll(alphabetListUpperCase);
-    if (checked[2])
+    if (checkedOption[0]) finalList.addAll(alphabetListLowerCase);
+    if (checkedOption[1]) finalList.addAll(alphabetListUpperCase);
+    if (checkedOption[2])
       finalList.addAll(List.generate(11, (index) => index.toString()));
-    if (checked[3]) finalList.addAll(symbols);
-
+    if (checkedOption[3]) finalList.addAll(symbols);
     finalList.shuffle();
     var word = "";
     for (int i = 0; i <= numberofItem; i++) {
-      word += finalList[Random().nextInt(finalList.length)];
+      word += finalList[Random.secure().nextInt(finalList.length)];
     }
     return word;
   }
+
+  static Widget getoLcalListTile(
+          {required String inputText, bool? value, Function? fun}) =>
+      CheckboxListTile(
+          title: Text(
+            'Include ' + inputText,
+            style: TextStyle(color: Colors.black),
+          ),
+          value: value,
+          onChanged: fun as void Function(bool?)?);
 }
