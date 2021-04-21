@@ -11,7 +11,7 @@ class PasswordButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: size.width * .64,
+      width: size.width * .7,
       height: size.height * .08,
       child: ElevatedButton(
         style: ButtonStyle(
