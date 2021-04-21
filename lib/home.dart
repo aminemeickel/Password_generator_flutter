@@ -35,7 +35,8 @@ class _HomePageState extends State<HomePage> {
           shadowColor: Colors.grey[300],
           color: Colors.white,
           child: Container(
-            constraints: BoxConstraints.tightFor(height: 480, width: 340),
+            constraints: BoxConstraints.tightFor(
+                height: size.height * .8, width: size.width * .96),
             alignment: Alignment.center,
             padding: EdgeInsets.all(10),
             child: Column(
@@ -50,9 +51,9 @@ class _HomePageState extends State<HomePage> {
                 Slider(
                   value: _val,
                   onChanged: (x) => setState(() => _val = x),
-                  max: 20,
+                  max: 22,
                   min: 4,
-                  divisions: 16,
+                  divisions: 18,
                   label: _val.round().toString(),
                 ),
                 optionListTile(

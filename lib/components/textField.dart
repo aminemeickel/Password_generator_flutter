@@ -32,20 +32,20 @@ Widget textfield({
                 shape: BoxShape.rectangle,
                 color: Colors.blue,
                 borderRadius: BorderRadius.all(Radius.circular(50))),
-            margin: EdgeInsets.fromLTRB(9, 3, 12, 3),
+            margin: EdgeInsets.fromLTRB(0, 3, 8, 3),
             padding: EdgeInsets.fromLTRB(9, 0, 1, 0),
             alignment: Alignment.center,
-            width: 60,
+            width: 67,
             child: Row(
               children: [
                 Icon(
                   Icons.copy,
                   color: Colors.white,
-                  size: 13,
+                  size: 14,
                 ),
                 Text(
                   " Copy",
-                  style: TextStyle(color: Colors.white, fontSize: 13),
+                  style: TextStyle(color: Colors.white, fontSize: 14),
                 )
               ],
             ),
