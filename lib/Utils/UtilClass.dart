@@ -11,9 +11,9 @@ class UtilClass {
     Fluttertoast.showToast(
         msg: message,
         toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM_LEFT,
+        gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.blue.withOpacity(0.8),
         textColor: Colors.white,
         fontSize: 16.0);
   }
