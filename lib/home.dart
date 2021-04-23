@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
             alignment: Alignment.center,
             padding: EdgeInsets.all(10),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 textfield(
                   textContorler: _textContorler,
