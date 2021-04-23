@@ -15,9 +15,8 @@ Widget textfield({
             Clipboard.setData(ClipboardData(text: textContorler.text));
             UtilClass.showToast(message: "Copied!!");
             var db = DBProvider.db;
-            var added =
-                await db.addPassword(GPassword(password: textContorler.text));
-            print(added);
+            await db.addPassword(GPassword(
+                password: textContorler.text, time: DateTime.now().toString()));
             textContorler.clear();
           } else {
             UtilClass.showToast(message: 'Empty Password');

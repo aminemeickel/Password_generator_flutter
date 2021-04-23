@@ -1,8 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_pw_gen/Utils/UtilClass.dart';
 import 'package:flutter_pw_gen/core/storage.dart';
 import 'package:flutter_pw_gen/models/gPasswordmodel.dart';
-import 'package:sqflite/sqflite.dart';
 
 class History extends StatefulWidget {
   History({Key? key}) : super(key: key);
@@ -13,10 +14,27 @@ class History extends StatefulWidget {
 
 class _HistoryState extends State<History> {
   DBProvider _dbProvider = DBProvider.db;
+  var _passwordList = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(title: Text('History'), centerTitle: true, actions: [
+          TextButton(
+            onPressed: () async {
+              var result = await dialog();
+              if (result) {
+                _dbProvider.clearpasswords();
+                setState(() {
+                  _passwordList = [];
+                });
+              }
+            },
+            child: Icon(
+              Icons.delete,
+              color: Colors.white,
+            ),
+          )
+        ]),
         body: FutureBuilder(
           future: _dbProvider.getAll(),
           builder: (context, snapShot) {
@@ -25,20 +43,34 @@ class _HistoryState extends State<History> {
                 child: CircularProgressIndicator(),
               );
             }
+            _passwordList = (snapShot.data as List);
             return ListView.builder(
-              itemCount: (snapShot.data as List).length,
+              itemCount: _passwordList.length,
               itemBuilder: (context, pos) {
-                var item = (snapShot.data as List)[pos];
+                var item = _passwordList[pos];
                 var gPassword = GPassword(
                   password: item['password'],
                   id: item['id'],
                   time: item['time'],
                 );
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                return Dismissible(
+                  key: Key(gPassword.password),
+                  onDismissed: (direction) =>
+                      _dbProvider.removepassword(gPassword.id),
+                  background: dismissBackground(Alignment.centerLeft),
+                  secondaryBackground: dismissBackground(Alignment.centerRight),
                   child: ListTile(
-                    title: Text("Password : ${gPassword.password}"),
-                    subtitle: Text('${gPassword.time}'),
+                    onTap: () {
+                      Clipboard.setData(
+                          ClipboardData(text: gPassword.password));
+                      UtilClass.showToast(message: 'Copied!!');
+                    },
+                    title: Text(
+                      '${gPassword.password}',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text('${gPassword.dateFormatter}'),
+                    trailing: Icon(Icons.copy),
                   ),
                 );
               },
@@ -85,10 +117,43 @@ class _HistoryState extends State<History> {
           ),
         ),
       );
-}
 
-extension on String {
-  toTitle() {
-    return this[0].toUpperCase() + this.substring(1);
-  }
+  dismissBackground(Alignment alignment) => Container(
+        color: Colors.red,
+        child: Align(
+          alignment: alignment,
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Icon(
+              Icons.delete,
+              color: Colors.white,
+              size: 35,
+            ),
+          ),
+        ),
+      );
+
+  dialog() => showDialog(
+        context: context,
+        builder: (builder) => AlertDialog(
+          title: Text('Clear All Password'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [Text('Do you Want to clear All passwords ?')],
+            ),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context, true);
+                },
+                child: Text('Clear')),
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context, false);
+                },
+                child: Text('Cancel'))
+          ],
+        ),
+      );
 }
