@@ -1,9 +1,6 @@
 import 'package:flutter_pw_gen/Utils/UtilClass.dart';
-import 'package:flutter_pw_gen/core/storage.dart';
 import 'package:flutter_pw_gen/history.dart';
-import 'package:flutter_pw_gen/models/gPasswordmodel.dart';
-import 'components/clearButton.dart';
-import 'components/generateButton.dart';
+import 'components/costumButton.dart';
 import 'components/listTile.dart';
 import 'components/textField.dart';
 import 'package:flutter/rendering.dart';
@@ -55,10 +52,8 @@ class _HomePageState extends State<HomePage> {
             alignment: Alignment.center,
             padding: EdgeInsets.all(10),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 8),
-                ),
                 textfield(
                   textContorler: _textContorler,
                   forAll: forAll,
@@ -90,21 +85,19 @@ class _HomePageState extends State<HomePage> {
                   value: _checked[3],
                   fun: (val) => setState(() => _checked[3] = val),
                 ),
-                SizedBox(
-                  height: 6,
-                ),
-                PasswordButton(
+                CustomButton(
+                  color: Colors.blue,
+                  text: 'Generate Password',
                   size: size,
                   onPressed: () {
                     _textContorler.text =
                         UtilClass.passwordGenerator(_checked, _val.toInt());
                   },
                 ),
-                SizedBox(
-                  height: 14,
-                ),
-                ClearButton(
+                CustomButton(
                   size: size,
+                  color: Colors.red,
+                  text: 'Clear Password',
                   onPressed: () {
                     _textContorler.clear();
                     UtilClass.showToast(message: 'Text Cleard');

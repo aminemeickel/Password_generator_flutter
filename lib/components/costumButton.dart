@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
 
-typedef String PasswordGenerate();
-
-class PasswordButton extends StatelessWidget {
+class CustomButton extends StatelessWidget {
   final Size size;
   final Function onPressed;
-  PasswordButton({Key? key, required this.size, required this.onPressed})
+  final Color color;
+  final String text;
+  CustomButton(
+      {Key? key,
+      required this.size,
+      required this.onPressed,
+      required this.color,
+      required this.text})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: size.width * .7,
-      height: size.height * .08,
+      height: size.height * .05,
       child: ElevatedButton(
         style: ButtonStyle(
           padding:
               MaterialStateProperty.all(EdgeInsets.fromLTRB(10, 15, 15, 15)),
-          backgroundColor: MaterialStateProperty.all(Colors.blue),
+          backgroundColor: MaterialStateProperty.all(color),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
@@ -29,7 +34,7 @@ class PasswordButton extends StatelessWidget {
           ),
         ),
         child: Text(
-          'Generate Password',
+          text,
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
         onPressed: onPressed as VoidCallback,

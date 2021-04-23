@@ -22,7 +22,7 @@ class _HistoryState extends State<History> {
           TextButton(
             onPressed: () async {
               var result = await dialog();
-              if (result) {
+              if (result && _passwordList.length > 0) {
                 _dbProvider.clearpasswords();
                 setState(() {
                   _passwordList = [];
