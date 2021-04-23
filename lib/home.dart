@@ -1,6 +1,7 @@
 import 'package:flutter_pw_gen/Utils/UtilClass.dart';
 import 'package:flutter_pw_gen/core/storage.dart';
 import 'package:flutter_pw_gen/history.dart';
+import 'package:flutter_pw_gen/models/gPasswordmodel.dart';
 import 'components/clearButton.dart';
 import 'components/generateButton.dart';
 import 'components/listTile.dart';
@@ -31,9 +32,13 @@ class _HomePageState extends State<HomePage> {
           leading: ElevatedButton(
             style: ButtonStyle(
                 shadowColor: MaterialStateProperty.all(Colors.transparent)),
-            onPressed: () {
+            onPressed: () async {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (builder) => History()));
+                context,
+                MaterialPageRoute(
+                  builder: (builder) => History(),
+                ),
+              );
             },
             child: Icon(Icons.history),
           )),

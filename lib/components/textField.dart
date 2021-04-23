@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_pw_gen/core/storage.dart';
+import 'package:flutter_pw_gen/models/gPasswordmodel.dart';
 
 import '../Utils/UtilClass.dart';
 
@@ -8,13 +10,19 @@ Widget textfield({
   required Color forAll,
 }) =>
     TextField(
-        onTap: () => {
-              if (textContorler!.text.isNotEmpty)
-                {
-                  Clipboard.setData(ClipboardData(text: textContorler.text)),
-                  UtilClass.showToast(message: "Copied!!")
-                }
-            },
+        onTap: () async {
+          if (textContorler!.text.isNotEmpty) {
+            Clipboard.setData(ClipboardData(text: textContorler.text));
+            UtilClass.showToast(message: "Copied!!");
+            var db = DBProvider.db;
+            var added =
+                await db.addPassword(GPassword(password: textContorler.text));
+            print(added);
+            textContorler.clear();
+          } else {
+            UtilClass.showToast(message: 'Empty Password');
+          }
+        },
         controller: textContorler,
         maxLines: 1,
         readOnly: true,
