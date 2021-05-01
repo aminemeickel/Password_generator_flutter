@@ -48,7 +48,9 @@ class _HomePageState extends State<HomePage> {
           color: Colors.white,
           child: Container(
             constraints: BoxConstraints.tightFor(
-                height: size.height * .8, width: size.width * .96),
+              height: size.height * .8,
+              width: size.width * .96,
+            ),
             alignment: Alignment.center,
             padding: EdgeInsets.all(10),
             child: Column(

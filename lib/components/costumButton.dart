@@ -17,7 +17,7 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: size.width * .7,
-      height: size.height * .05,
+      height: 50,
       child: ElevatedButton(
         style: ButtonStyle(
           padding:
