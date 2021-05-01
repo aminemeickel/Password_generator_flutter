@@ -1,8 +1,7 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pw_gen/Utils/UtilClass.dart';
-import 'package:flutter_pw_gen/core/storage.dart';
+import 'package:flutter_pw_gen/core/database.dart';
 import 'package:flutter_pw_gen/models/gPasswordmodel.dart';
 
 class History extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_pw_gen/core/storage.dart';
+import 'package:flutter_pw_gen/core/database.dart';
 import 'package:flutter_pw_gen/models/gPasswordmodel.dart';
 
 import '../Utils/UtilClass.dart';

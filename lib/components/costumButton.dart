@@ -5,19 +5,25 @@ class CustomButton extends StatelessWidget {
   final Function onPressed;
   final Color color;
   final String text;
+  final double? width;
+  final double height;
+  final double fontSize;
   CustomButton(
       {Key? key,
       required this.size,
       required this.onPressed,
       required this.color,
-      required this.text})
+      required this.text,
+      this.width,
+      this.height = 50,
+      this.fontSize = 20})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: size.width * .7,
-      height: 50,
+      width: width ?? size.width * .7,
+      height: height,
       child: ElevatedButton(
         style: ButtonStyle(
           padding:
@@ -35,7 +41,7 @@ class CustomButton extends StatelessWidget {
         ),
         child: Text(
           text,
-          style: TextStyle(color: Colors.white, fontSize: 20),
+          style: TextStyle(color: Colors.white, fontSize: fontSize),
         ),
         onPressed: onPressed as VoidCallback,
       ),

@@ -7,8 +7,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  final String? title;
-  HomePage({Key? key, this.title}) : super(key: key);
+  final String title;
+  HomePage({Key? key, this.title = 'Flutter Generate Password'})
+      : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -16,7 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   static double _val = 4;
   var _textContorler = TextEditingController();
-  var _checked = <bool>[false, false, false, false];
+  var _checked = [false, false, false, false];
   var forAll = Colors.blue;
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-          title: Text(widget.title!),
+          title: Text(widget.title),
           centerTitle: true,
           leading: ElevatedButton(
             style: ButtonStyle(
