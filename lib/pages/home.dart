@@ -1,8 +1,8 @@
 import 'package:flutter_pw_gen/Utils/UtilClass.dart';
-import 'package:flutter_pw_gen/history.dart';
-import 'components/costumButton.dart';
-import 'components/listTile.dart';
-import 'components/textField.dart';
+import 'package:flutter_pw_gen/pages/history.dart';
+import '../components/costumButton.dart';
+import '../components/listTile.dart';
+import '../components/textField.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 

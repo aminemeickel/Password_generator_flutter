@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_pw_gen/home.dart';
+import 'package:flutter_pw_gen/pages/home.dart';
 
 import 'core/preference.dart';
-import 'loginPage.dart';
+import 'pages/loginPage.dart';
 
 var routes = {
   '/': (builder) => HomePage(),
